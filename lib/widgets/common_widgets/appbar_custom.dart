@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:staff_management/widgets/screens/notification/notification_screen.dart';
 
 AppBar AppbarCustom(BuildContext context, String title) {
   return AppBar(
@@ -17,18 +16,18 @@ AppBar AppbarCustom(BuildContext context, String title) {
       title,
       style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
     ),
-    actions: [
-      IconButton(
-        icon: Icon(
-          Icons.notifications,
-          color: Colors.white,
-        ),
-        onPressed: () {
-          // Xử lý sự kiện khi nhấn vào nút thông báo
-          Navigator.of(context).pushNamed(NotificationScreen.route);
-        },
-      ),
-    ],
+    // actions: [
+    //   IconButton(
+    //     icon: Icon(
+    //       Icons.notifications,
+    //       color: Colors.white,
+    //     ),
+    //     onPressed: () {
+    //       // Xử lý sự kiện khi nhấn vào nút thông báo
+    //       Navigator.of(context).pushNamed(NotificationScreen.route);
+    //     },
+    //   ),
+    // ],
 
     //automaticallyImplyLeading: false,
     backgroundColor: Colors.red,

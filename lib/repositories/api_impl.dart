@@ -102,7 +102,7 @@ class ApiImpl implements Api {
   Future<bool?> updateEmployeeInfo(String email, String address, String phone, int id) async {
     try {
       final response =
-          await _dioClient.dio.put('/employee/update/$id', data: {'phone': phone, 'email': email, 'address': address});
+          await _dioClient.dio.post('/employee/update/$id', data: {'phone': phone, 'email': email, 'address': address});
       if (response.statusCode == 200)
         return true;
       else
@@ -117,7 +117,7 @@ class ApiImpl implements Api {
     final prefs = await SharedPreferences.getInstance();
     final id = prefs.getInt('id_employee');
     try {
-      final response = await _dioClient.dio.put('/employee/update/$id', data: {'password': password});
+      final response = await _dioClient.dio.post('/employee/update/$id', data: {'password': password});
       if (response.statusCode == 200)
         return true;
       else
@@ -165,5 +165,23 @@ class ApiImpl implements Api {
       print('Error fetching leave requests: $e');
     }
     return null;
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getEmployeeAttendance() async {
+    final prefs = await SharedPreferences.getInstance();
+    final id = prefs.getInt('id_employee');
+    try {
+      final response = await _dioClient.dio.get(
+        '/attendance/employee/$id',
+      );
+      if (response.statusCode == 200) {
+        List<dynamic> attendanceData = response.data['attendance_data'];
+        return List<Map<String, dynamic>>.from(attendanceData);
+      }
+    } catch (e) {
+      print('Error fetching leave requests: $e');
+    }
+    return [];
   }
 }

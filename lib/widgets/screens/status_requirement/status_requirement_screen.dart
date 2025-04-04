@@ -21,6 +21,7 @@ class _StatusRequirementScreenState extends State<StatusRequirementScreen> {
     if (response != null) {
       setState(() {
         _leaveRequests = response.map((data) => LeaveRequest.fromJson(data)).toList();
+        _leaveRequests = _leaveRequests?.reversed.toList();
       });
     } else {
       setState(() {

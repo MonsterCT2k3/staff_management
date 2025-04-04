@@ -95,6 +95,7 @@ class _LeaveRequirementScreenState extends State<LeaveRequirementScreen> {
       behavior: HitTestBehavior.opaque,
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+        resizeToAvoidBottomInset: true,
         appBar: AppBar(
           leading: Builder(
             builder: (context) => IconButton(
@@ -116,106 +117,109 @@ class _LeaveRequirementScreenState extends State<LeaveRequirementScreen> {
           //automaticallyImplyLeading: false,
           backgroundColor: Colors.red,
         ),
-        body: Column(
-          children: [
-            SizedBox(
-              height: 16,
-            ),
-            ElevatedButton(
-                onPressed: () async {
-                  Navigator.of(context).pushNamed(StatusRequirementScreen.route);
-                },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [Icon(Icons.list_alt), Text("Xem tình trạng đơn")],
-                )),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
-              child: Form(
-                key: _formKey,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      SizedBox(height: 16),
-                      DropdownButtonFormField<String>(
-                        decoration: InputDecoration(labelText: 'Loại nghỉ phép'),
-                        value: _leaveType,
-                        items: [
-                          DropdownMenuItem(value: 'Nghỉ phép năm', child: Text('Nghỉ phép năm')),
-                          DropdownMenuItem(value: 'Nghỉ bệnh', child: Text('Nghỉ bệnh')),
-                          DropdownMenuItem(value: 'Nghỉ không lương', child: Text('Nghỉ không lương')),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            _leaveType = value;
-                          });
-                        },
-                        validator: (value) {
-                          if (value == null) {
-                            return 'Vui lòng chọn loại nghỉ phép';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 16),
-                      Column(
-                        children: [
-                          Container(
-                            width: 200,
-                            child: ElevatedButton(
-                              onPressed: () => _selectDate(context, true),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(_startDate == null ? '' : 'Bắt đầu: '),
-                                  Text(_startDate == null
-                                      ? 'Chọn ngày bắt đầu'
-                                      : "${_startDate!.toLocal()}".split(' ')[0]),
-                                ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              SizedBox(
+                height: 16,
+              ),
+              ElevatedButton(
+                  onPressed: () async {
+                    Navigator.of(context).pushNamed(StatusRequirementScreen.route);
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [Icon(Icons.list_alt), Text("Xem tình trạng đơn")],
+                  )),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
+                child: Form(
+                  key: _formKey,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        SizedBox(height: 16),
+                        DropdownButtonFormField<String>(
+                          decoration: InputDecoration(labelText: 'Loại nghỉ phép'),
+                          value: _leaveType,
+                          items: [
+                            DropdownMenuItem(value: 'Nghỉ phép năm', child: Text('Nghỉ phép năm')),
+                            DropdownMenuItem(value: 'Nghỉ bệnh', child: Text('Nghỉ bệnh')),
+                            DropdownMenuItem(value: 'Nghỉ không lương', child: Text('Nghỉ không lương')),
+                          ],
+                          onChanged: (value) {
+                            setState(() {
+                              _leaveType = value;
+                            });
+                          },
+                          validator: (value) {
+                            if (value == null) {
+                              return 'Vui lòng chọn loại nghỉ phép';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 16),
+                        Column(
+                          children: [
+                            Container(
+                              width: 200,
+                              child: ElevatedButton(
+                                onPressed: () => _selectDate(context, true),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(_startDate == null ? '' : 'Bắt đầu: '),
+                                    Text(_startDate == null
+                                        ? 'Chọn ngày bắt đầu'
+                                        : "${_startDate!.toLocal()}".split(' ')[0]),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(height: 8),
-                          Container(
-                            width: 200,
-                            child: ElevatedButton(
-                              onPressed: () => _selectDate(context, false),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(_endDate == null ? '' : 'Kết thúc: '),
-                                  Text(
-                                      _endDate == null ? 'Chọn ngày kết thúc' : '${_endDate!.toLocal()}'.split(' ')[0]),
-                                ],
+                            SizedBox(height: 8),
+                            Container(
+                              width: 200,
+                              child: ElevatedButton(
+                                onPressed: () => _selectDate(context, false),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(_endDate == null ? '' : 'Kết thúc: '),
+                                    Text(_endDate == null
+                                        ? 'Chọn ngày kết thúc'
+                                        : '${_endDate!.toLocal()}'.split(' ')[0]),
+                                  ],
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      // SizedBox(height:),
-                      TextFormField(
-                        controller: _reasonController,
-                        decoration: InputDecoration(labelText: 'Lý do nghỉ phép'),
-                        maxLines: 3,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Vui lòng nhập lý do nghỉ phép';
-                          }
-                          return null;
-                        },
-                      ),
-                      SizedBox(height: 24),
-                      ElevatedButton(
-                        onPressed: _submitForm,
-                        child: Text('Nộp đơn'),
-                      ),
-                    ],
+                          ],
+                        ),
+                        // SizedBox(height:),
+                        TextFormField(
+                          controller: _reasonController,
+                          decoration: InputDecoration(labelText: 'Lý do nghỉ phép'),
+                          maxLines: 3,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Vui lòng nhập lý do nghỉ phép';
+                            }
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 24),
+                        ElevatedButton(
+                          onPressed: _submitForm,
+                          child: Text('Nộp đơn'),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

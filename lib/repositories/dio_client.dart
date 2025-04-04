@@ -6,7 +6,7 @@ class DioClient {
 
   DioClient() {
     _dio = Dio(BaseOptions(
-      baseUrl: 'http://127.0.0.1:5000', // Thay bằng URL API của bạn
+      baseUrl: 'https://aeeb-2405-4802-21a-90f0-b51e-f2cc-4f6d-37bb.ngrok-free.app', // Thay bằng URL API của bạn
       connectTimeout: Duration(milliseconds: 5000), // 5 giây
       receiveTimeout: Duration(milliseconds: 3000),
     ));

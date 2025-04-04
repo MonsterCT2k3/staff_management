@@ -18,4 +18,6 @@ abstract class Api {
   Future<bool?> leaveRequirement(String startDate, String endDate, String requestType, String reason);
 
   Future<List<dynamic>?> getEmployeeLeaveRequests();
+
+  Future<List<Map<String, dynamic>>?> getEmployeeAttendance();
 }
